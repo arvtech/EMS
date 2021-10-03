@@ -1,0 +1,194 @@
+﻿@model EmpMngSys.Models.EmployeeModal
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script>
+
+   
+    function ValidateForm()
+    {
+            
+
+        if ($("#txtname").val() == "")
+        {
+            alert("Please Enter Name");
+            $("#txtname").focus();
+            return false;
+        }
+
+        if ($("#txtsalary").val() == "")
+        {
+            alert("Please Enter Salary");
+            $("#txtsalary").focus();
+            return false;
+        }
+        if ($("#txtemail").val() != "")
+        {
+            if (IsEmail(email) == false) {
+                alert("Plase Enter Valid Email");
+                return false;
+            }
+
+        }
+        else {alert("Please Enter Email");
+            $("#txtemail").focus();
+            return false;
+        }
+            if ($("#txtcontact").val() == "")
+            {
+                alert("Please Enter Contact");
+                $("#txtcontact").focus();
+                return false;
+            }
+            if ($("#txtaddress").val() == "")
+            {
+                alert("Please Enter Address");
+                $("#txtaddress").focus();
+                return false;
+            }
+
+            if ($("#ddldept").val() == "")
+            {
+                alert("Please Select department");
+                return false;
+            }
+
+            
+
+        }
+
+
+
+      
+
+
+
+  
+</script>
+
+@using (Html.BeginForm("Create", "Employee", FormMethod.Post, new { @enctype = "multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+     <h4>Add Employee</h4>
+        <hr />
+       
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @id="txtname" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Department, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DeptId, Model.Departments, "Please Select Department", new { @class = "form-control", @id = "ddldept" })
+               
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Salary, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Salary, new { htmlAttributes = new { @class = "form-control", @id = "txtsalary", @maxlength=8 } })
+                @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "txtemail" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Contact, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Contact, new { htmlAttributes = new { @class = "form-control", @id = "txtcontact", @maxlength = 10 } })
+                @Html.ValidationMessageFor(model => model.Contact, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @id = "txtaddress" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+               
+                <input type="file" name="ImageData" id="ImageData" />
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+      
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id ="btnadd" value="Add" class="btn btn-primary" onclick="return ValidateForm();" />
+            </div>
+        </div>
+    </div>
+}
+
+@{
+
+    if (TempData["Message"] != null) {
+        
+        @Html.Raw(TempData["Message"]);
+    }
+}
+
+
+
+<script>
+
+   
+  
+        $(document).ready(function () {
+
+           
+            $('#txtcontact').keypress(function (e) {
+              
+                var charCode = (e.which) ? e.which : event.keyCode
+
+                if (String.fromCharCode(charCode).match(/[^0-9]/g))
+
+                    return false;
+
+            });
+
+            $("#txtsalary").keypress(function (e) {
+
+                var charcode = (e.which) ? e.which : event.keycode
+
+                if (String.fromCharCode(charcode).match(/[^0-9]/g))
+                    return false;
+            });
+
+
+        });
+
+
+
+</script>
+<script src="~/vendor/jquery/jquery.min.js"></script>
+<script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
